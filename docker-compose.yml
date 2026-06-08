@@ -1,0 +1,70 @@
+﻿version: '3.8'
+
+services:
+  opcua-simulator:
+    build: .
+    container_name: opcua_simulator
+    command: python app/opcua_simulator.py --config app/config.yaml
+    ports:
+      - "4840:4840"
+    restart: unless-stopped
+    networks:
+      - iiot-network
+
+  opcua2mcp_001:
+    build: .
+    container_name: opcua2mcp_001
+    command: python app/app.py
+    ports:
+      - "5011:5001"
+    environment:
+      - MACHINE_NAME=Machine-001
+      - OPCUA_ENDPOINT=opc.tcp://opcua-simulator:4840
+      - CACHE_BACKEND=redis
+      - REDIS_URL=redis://redis:6379/0
+      - MCP_PORT=5001
+      - OPCUA_CONFIG=app/config.yaml
+    depends_on:
+      - opcua-simulator
+      - redis
+    restart: unless-stopped
+    networks:
+      - iiot-network
+
+  opcua2mcp_002:
+    build: .
+    container_name: opcua2mcp_002
+    command: python app/app.py
+    ports:
+      - "5021:5001"
+    environment:
+      - MACHINE_NAME=Machine-002
+      - OPCUA_ENDPOINT=opc.tcp://opcua-simulator:4840
+      - CACHE_BACKEND=redis
+      - REDIS_URL=redis://redis:6379/0
+      - MCP_PORT=5001
+      - OPCUA_CONFIG=app/config.yaml
+    depends_on:
+      - opcua-simulator
+      - redis
+    restart: unless-stopped
+    networks:
+      - iiot-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: iiot-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+    networks:
+      - iiot-network
+
+networks:
+  iiot-network:
+    driver: bridge
+
+volumes:
+  redis-data:
