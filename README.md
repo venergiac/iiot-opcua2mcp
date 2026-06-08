@@ -2,6 +2,8 @@
 
 This repository provides an end-to-end Industrial IoT prototype that converts OPC UA sensor data into MCP-compatible tools and exposes machine health via both HTTP and MCP.
 
+![/logo.png](/logo.png)
+
 ## What is `opcua2mcp`?
 
 `opcua2mcp` is the core bridge module in `src/opcua2mcp.py`.
