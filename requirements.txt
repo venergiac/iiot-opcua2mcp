@@ -10,9 +10,6 @@ numpy==1.26.2
 # HTTP client for health checks
 requests==2.31.0
 
-# Docker SDK (optional, for container management)
-docker==7.0.0
-
 # ML libraries (for future enhancement)
 scikit-learn==1.3.2
 
@@ -24,7 +21,7 @@ pandas==2.1.4
 # Official Model Context Protocol library
 mcp>=0.1.0
 # OPC UA client and Redis caching for the OPCUA to MCP converter
-opcua>=1.1.8
+opcua>=0.98.0
 redis>=5.0.0
 # YAML configuration
 PyYAML>=6.0

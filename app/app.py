@@ -4,7 +4,7 @@ from pathlib import Path
 
 import yaml
 
-from src.opcua2mcp import OPCUA2MCPConverter
+from opcua2mcp import OPCUA2MCPConverter
 
 
 def load_config(config_path: Path) -> dict:
