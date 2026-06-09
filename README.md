@@ -1,3 +1,8 @@
+
+![github](https://img.shields.io/badge/github-repo-blue?logo=github)
+![ai](https://img.shields.io/badge/physical_ai-iiot-green)
+[![followme](https://img.shields.io/badge/followme-venergiac-red)](https://venergiac.substack.com/)
+
 # OPCUA2MCP IIoT Bridge
 
 This repository provides an end-to-end Industrial IoT prototype that converts OPC UA sensor data into MCP-compatible tools and exposes machine health via both HTTP and MCP.

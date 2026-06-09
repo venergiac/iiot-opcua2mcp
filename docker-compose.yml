@@ -62,9 +62,51 @@ services:
     networks:
       - iiot-network
 
+  jupyterlab:
+    container_name: jupyter-iiot
+    #image: quay.io/jupyter/datascience-notebook:latest
+    image: quay.io/jupyter/pytorch-notebook:cuda13-latest
+    restart: always
+    profiles:
+      - test
+    volumes:
+      - .:/home/jovyan/work
+    environment:
+      - JUPYTER_TOKEN=admin
+      - OLLAMA_HOST=http://ollama:11434
+    ports:
+      - '8888:8888'
+    networks:
+      - iiot-network
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+  ollama:
+    image: ollama/ollama:latest
+    profiles:
+      - test
+    ports:
+      - "11434:11434"
+    networks:
+      - iiot-network
+    volumes:
+      - ollama_volume:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 networks:
   iiot-network:
     driver: bridge
 
 volumes:
   redis-data:
+
+  ollama_volume:
